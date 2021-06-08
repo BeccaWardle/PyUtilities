@@ -6,6 +6,7 @@ from filecmp import cmp
 from shutil import copy2, disk_usage, move
 
 from PIL import Image
+import exifread
 
 # shutil import rmtree # unsure of original use
 
@@ -67,7 +68,8 @@ for root, dirs, files in os.walk("."):
         source_path = os.path.join(root, file_Name)
         # try to get proper date taken via exif data
         try:
-            take_date = Image.open(source_path).getexif()[36867].split(":")
+            # take_date = Image.open(source_path).getexif()[36867].split(":") # old method using PIL (didn't support cr2)
+            take_date = str(exifread.process_file(open("IMG_8174.CR2", "rb"))["EXIF DateTimeOriginal"]).split(" ")[0].split(":")
             file_Year = take_date[0]
             file_Month = months[int(take_date[1])-1]
             file_Date = take_date[2].split()[0]
