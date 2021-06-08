@@ -6,7 +6,7 @@ from filecmp import cmp
 from shutil import copy2, disk_usage, move
 
 from PIL import Image
-import exifread
+from exifread import process_file
 
 # shutil import rmtree # unsure of original use
 
@@ -69,7 +69,7 @@ for root, dirs, files in os.walk("."):
         # try to get proper date taken via exif data
         try:
             # take_date = Image.open(source_path).getexif()[36867].split(":") # old method using PIL (didn't support cr2)
-            take_date = str(exifread.process_file(open("IMG_8174.CR2", "rb"))["EXIF DateTimeOriginal"]).split(" ")[0].split(":")
+            take_date = str(process_file(open(source_path, "rb"))["EXIF DateTimeOriginal"]).split(" ")[0].split(":")
             file_Year = take_date[0]
             file_Month = months[int(take_date[1])-1]
             file_Date = take_date[2].split()[0]
@@ -128,17 +128,13 @@ for root, dirs, files in os.walk("."):
 
         if args.copy:
             copy2(source_path, dest_path + "/" + final_dest + "/" + file_Name + appendix)
-            log += "Copied " + str(source_path) + " as: " + dest_path + final_dest + file_Name + appendix + "\n"
+            log += "Copied " + str(source_path) + " as: " + str(dest_path) + str(final_dest) + "/" + str(file_Name) + str(appendix) + "\n"
         else:
             move(source_path, dest_path + "/" + final_dest + "/" + file_Name + appendix)
-            log += "Moved " + str(source_path) + " to: " + str(dest_path) + str(final_dest) + str(file_Name) + str(appendix) + "\n"
+            log += "Moved " + str(source_path) + " to: " + str(dest_path) + str(final_dest) + "/" + str(file_Name) + str(appendix) + "\n"
         logger.write(log)
         log = ""
 
-if os.path.isfile(dest_path + "/log.txt"):
-    logger = open(dest_path + "/log.txt", "a+")
-else:
-    logger = open(dest_path + "/log.txt", "w+")
-
+# logger = open(dest_path + "/log.txt", "a+")
 logger.write("\n\n")
 logger.close()
