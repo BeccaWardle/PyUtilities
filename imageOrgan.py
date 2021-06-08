@@ -4,6 +4,7 @@ import os
 from datetime import date, datetime
 from filecmp import cmp
 from shutil import copy2, disk_usage, move
+
 from PIL import Image
 
 # shutil import rmtree # unsure of original use
@@ -23,7 +24,7 @@ parser.add_argument("--output", "-o", help="set the output directory")
 parser.add_argument("--no-log", "-l", help="turn off the logging function", action="store_true")
 args = parser.parse_args()
 
-# if source is passed as arg sets that, uses current directo
+# if source is passed as arg sets that, else uses current directory
 if args.source:
     origin_path = args.source
     os.chdir(origin_path)
