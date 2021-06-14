@@ -131,7 +131,7 @@ for root, dirs, files in os.walk("."):
             log += "Copied " + str(source_path) + " as: " + str(dest_path) + str(final_dest) + "/" + str(file_Name) + str(appendix) + "\n"
         else:
             move(source_path, dest_path + "/" + final_dest + "/" + file_Name + appendix)
-            log += "Moved " + str(source_path) + " to: " + str(dest_path) + str(final_dest) + "/" + str(file_Name) + str(appendix) + "\n"
+            log += "Moved " + str(source_path) + " to: " + str(dest_path) + "/" + str(final_dest) + "/" + str(file_Name) + str(appendix) + "\n"
         logger.write(log)
         log = ""
 
