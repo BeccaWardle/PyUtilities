@@ -5,8 +5,8 @@ from datetime import date, datetime
 from filecmp import cmp
 from shutil import copy2, disk_usage, move
 
-from PIL import Image
 from exifread import process_file
+from PIL import Image
 
 # shutil import rmtree # unsure of original use
 
